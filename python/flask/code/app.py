@@ -76,7 +76,7 @@ def user_profile(user_id):
         <p>
            Your username is: {} 
         </p>
-        <a href="/call">Go Back</a>
+        <a href="/users">Go Back</a>
         
     """.format(user['name'], user['username'])
 
