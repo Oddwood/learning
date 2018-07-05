@@ -2,9 +2,10 @@ FROM python:3
 
 COPY ./code /app
 WORKDIR /app
-RUN pip install -r requirements.txt && FLASK_APP=app.py
+RUN pip install -r requirements.txt
+
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=development
 
 # host 0: is required in order to listen on incoming requests
-CMD [ "flask", "run", "--host=0.0.0.0" ]
-
-EXPOSE 5000
+CMD flask run --host=0.0.0.0 
