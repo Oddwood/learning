@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask
 from utils.lister import Lister
 
 app = Flask(__name__)
