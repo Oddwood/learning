@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, render_template
 import requests as api_caller
 import json
 
@@ -14,13 +14,8 @@ def index():
         'loop/15',
         'users'
     ]
-    
-    linkList=''
-    for links in listOfLinks:
-        linkList += "<a href='{url}'>{link}</a><br />".format(url=links, link=links)
 
-
-    return linkList
+    return render_template('index.html', linkList=listOfLinks)
 
 @app.route('/loop')
 def loop():
