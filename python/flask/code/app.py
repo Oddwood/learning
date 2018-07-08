@@ -20,14 +20,14 @@ def index():
 
 @app.route('/loop')
 def loop():
-    return "<ul>"+Lister.getList(5)+"</ul>"
+    return redirect(url_for('loopofnum', numOfListElements=2))
 
 @app.route('/loop/', defaults={'numOfListElements': None})
 @app.route('/loop/<int:numOfListElements>')
 def loopofnum(numOfListElements: int) ->str:
     
     if numOfListElements is None:
-        return redirect(url_for('loop'))
+        numOfListElements=5
 
     if numOfListElements > 50:
         return "I see what you did there"
