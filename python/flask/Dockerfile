@@ -4,7 +4,7 @@ COPY ./code /app
 WORKDIR /app
 RUN pip install -r requirements.txt
 
-ENV FLASK_APP=app.py
+ENV FLASK_APP=app
 ENV FLASK_ENV=development
 
 # host 0: is required in order to listen on incoming requests
