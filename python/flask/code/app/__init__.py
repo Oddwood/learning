@@ -28,8 +28,6 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-db.create_all()
-
 
 @app.route('/')
 def index():
@@ -48,6 +46,10 @@ def createDB():
 
 @app.route('/users/')
 def users():
+    users = User.query.all()
+
+    name = ''
+    for user in users:
+        name += user.username + " <b>::</b> "
     
-    
-    return str(User.query.all())
+    return name
