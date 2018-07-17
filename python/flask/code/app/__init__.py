@@ -1,36 +1,12 @@
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = \
-    'postgresql+psycopg2://{user}:{passwd}@{host}:{port}/{db}'.format(
-        user=app.config['DBUSER'],
-        passwd=app.config['DBPASS'],
-        host=app.config['DBHOST'],
-        port=app.config['DBPORT'],
-        db=app.config['DBNAME']
-    )
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    address = db.Column(db.String())
-
-    def __repr__(self):
-        return '<User %r>' % self.username
-
+from .models import User
+from .database import db, migrate
 
 @app.route('/')
 def index():
