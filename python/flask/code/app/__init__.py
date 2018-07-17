@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 app = Flask(__name__, instance_relative_config=True)
@@ -18,12 +19,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), nullable=False)
+    address = db.Column(db.String())
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -31,25 +34,22 @@ class User(db.Model):
 
 @app.route('/')
 def index():
-    return '<h1>man.</h1>'
+    return '<h1>Works!</h1>'
 
 @app.route('/dbc')
 def createDB():
     User.query.delete()
     
-
-    test = User(username="test_username", email="hello@user.ch")
+    test = User(username="test_username", email="hello@user.ch", address="Test Address")
+    test2 = User(username="test_username2", email="hello@user.ch2", address="Test Address2")
     db.session.add(test)
+    db.session.add(test2)
     db.session.commit()
-
+    
     return "Created used table"
 
 @app.route('/users/')
 def users():
     users = User.query.all()
 
-    name = ''
-    for user in users:
-        name += user.username + " <b>::</b> "
-    
-    return name
+    return render_template('user.html', users=users)

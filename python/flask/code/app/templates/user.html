@@ -1,0 +1,15 @@
+<!doctype html>
+<title>Hello from Flask</title>
+{% if users %}
+    <b>Total: {{ users|count() }}</b>
+    {% for user in users %}
+        <p>
+            Hello {{ user.username }}<br />
+            Address: {{ user.address }}<br />
+            emai: {{ user.email }}
+        </p>
+    {% endfor %}
+{% else %}
+  <h1>Hello, World!</h1>
+  No Users
+{% endif %}
