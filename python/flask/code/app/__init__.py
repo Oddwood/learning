@@ -5,7 +5,7 @@ app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
 
-from .models import User
+from .models import User, Address
 from .database import db, migrate
 
 @app.route('/')
@@ -14,12 +14,15 @@ def index():
 
 @app.route('/dbc')
 def createDB():
+    Address.query.delete()
     User.query.delete()
     
-    test = User(username="test_username", email="hello@user.ch", address="Test Address")
-    test2 = User(username="test_username2", email="hello@user.ch2", address="Test Address2")
+    addresses = []
+    for i in range(10):
+        addresses.append(Address(street="Freilager Nr." + str(i)))
+    
+    test = User(username="test_username", email="hello@user.ch", addresses=addresses)
     db.session.add(test)
-    db.session.add(test2)
     db.session.commit()
     
     return "Created used table"

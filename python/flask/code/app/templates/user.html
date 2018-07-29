@@ -5,8 +5,12 @@
     {% for user in users %}
         <p>
             Hello {{ user.username }}<br />
-            Address: {{ user.address }}<br />
             emai: {{ user.email }}
+            <p>
+                {% for address in user.addresses %}
+                    Address: {{ address.street }}<br />
+                {% endfor %}
+            </p>
         </p>
     {% endfor %}
 {% else %}
