@@ -1,9 +1,12 @@
 from flask import Flask, render_template
+from flask_mail import Mail, Message
 
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
+
+mail = Mail(app)
 
 from .models import User, Address
 from .database import db, migrate
@@ -32,3 +35,15 @@ def users():
     users = User.query.all()
 
     return render_template('user.html', users=users)
+
+@app.route('/send/')
+def send_mail():
+    users = User.query.all()
+
+    msg = Message("Hello",
+                  sender="from@example.com",
+                  recipients=["to@example.com"])
+    msg.html = render_template("mail.html",users=users)
+    mail.send(msg)
+
+    return "Mail sent"
