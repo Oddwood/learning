@@ -1,2 +1,5 @@
 Flask
+Flask-SQLAlchemy
+Flask-Migrate
 requests
+psycopg2

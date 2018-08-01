@@ -1,7 +1,7 @@
 FROM python:3
 
-COPY ./code /app
-WORKDIR /app
+COPY ./code /www
+WORKDIR /www
 RUN pip install -r requirements.txt
 
 ENV FLASK_APP=app
