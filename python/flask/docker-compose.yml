@@ -9,6 +9,13 @@ services:
     ports:
      - "5000:5000"
   
+  maildev:
+    image: djfarrelly/maildev
+    restart: always
+
+    ports:
+      - "1080:80"
+
   db:
     image: postgres
     restart: always

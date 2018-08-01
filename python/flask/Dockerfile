@@ -2,6 +2,7 @@ FROM python:3
 
 COPY ./code /www
 WORKDIR /www
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 ENV FLASK_APP=app
